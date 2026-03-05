@@ -22,7 +22,7 @@ def standardize(v: np.ndarray):
 def plot_fit(x, y, y_pred, title, outpath):
     plt.figure()
     plt.scatter(x, y)
-    # Pour tracer une courbe propre, on trie x
+    # On trie x
     idx = np.argsort(x)
     plt.plot(x[idx], y_pred[idx])
     plt.title(title)
@@ -47,19 +47,18 @@ def plot_rmse(history, title, outpath):
 def main():
     os.makedirs(OUT_DIR, exist_ok=True)
 
-    # 1) Lire CSV :contentReference[oaicite:4]{index=4}
+
     df = pd.read_csv(DATA_PATH)
 
-    # Adapter si tes colonnes s'appellent autrement
-    # Ici on suppose: surface, prix
+
     x_raw = df["surface"].to_numpy(dtype=float)
     y_raw = df["prix"].to_numpy(dtype=float)
 
-    # 2) Standardiser x et y :contentReference[oaicite:5]{index=5}
+    # 2) Standardiser x et y 
     x, mux, sigx = standardize(x_raw)
     y, muy, sigy = standardize(y_raw)
 
-    # 3) Entraîner linéaire + quadratique :contentReference[oaicite:6]{index=6}
+    # 3) Entraîner linéaire + quadratique 
     lr = 0.05
     epochs = 2000
 
@@ -75,7 +74,7 @@ def main():
     print(f"Linear:    a={aL:.4f}, b={bL:.4f}, RMSE={rmse_L:.4f}")
     print(f"Quadratic: a={aQ:.4f}, b={bQ:.4f}, c={cQ:.4f}, RMSE={rmse_Q:.4f}")
 
-    # 4) Figures demandées (fit + rmse curve) :contentReference[oaicite:7]{index=7}
+    # 4) Figures
     plot_fit(x, y, y_pred_L, "Régression linéaire (standardisée)",
              os.path.join(OUT_DIR, "fit_linear.png"))
     plot_rmse(histL, "RMSE vs epochs (linéaire)",
@@ -86,7 +85,7 @@ def main():
     plot_rmse(histQ, "RMSE vs epochs (quadratique)",
               os.path.join(OUT_DIR, "rmse_quadratic.png"))
 
-    # 5) Petit résumé comparaison :contentReference[oaicite:8]{index=8}
+    # 5) comparaison 
     if rmse_Q < rmse_L:
         print(" Quadratique meilleur (RMSE plus petite).")
     else:

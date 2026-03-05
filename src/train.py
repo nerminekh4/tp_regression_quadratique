@@ -2,7 +2,7 @@ import numpy as np
 from .models import predict_linear, predict_quadratic
 from .metrics import rmse
 
-# --------- LINEAR ---------
+#linéaire
 def step_linear(a: float, b: float, x: np.ndarray, y: np.ndarray, lr: float):
     """
     1 step GD for y_hat = a x + b with MSE loss.
@@ -12,7 +12,7 @@ def step_linear(a: float, b: float, x: np.ndarray, y: np.ndarray, lr: float):
     y_pred = predict_linear(a, b, x)
     e = y_pred - y  # error vector
 
-    # Gradients for MSE: (2/n) sum e * d(y_hat)/d(param)
+    # Gradients pour MSE: (2/n) sum e * d(y_hat)/d(param)
     dL_da = (2.0 / n) * np.sum(e * x)
     dL_db = (2.0 / n) * np.sum(e)
 
@@ -34,7 +34,7 @@ def train_linear(x: np.ndarray, y: np.ndarray, lr: float, epochs: int, seed: int
     return a, b, history
 
 
-# --------- QUADRATIC ---------
+#Quadratique
 def step_quadratic(a: float, b: float, c: float, x: np.ndarray, y: np.ndarray, lr: float):
     """
     1 step GD for y_hat = a x^2 + b x + c with MSE loss.
@@ -44,7 +44,7 @@ def step_quadratic(a: float, b: float, c: float, x: np.ndarray, y: np.ndarray, l
     y_pred = predict_quadratic(a, b, c, x)
     e = y_pred - y
 
-    # From the statement: dL/da = (2/n) sum e * x^2, etc. :contentReference[oaicite:3]{index=3}
+    #  dL/da = (2/n) sum e * x^2
     dL_da = (2.0 / n) * np.sum(e * (x ** 2))
     dL_db = (2.0 / n) * np.sum(e * x)
     dL_dc = (2.0 / n) * np.sum(e)
